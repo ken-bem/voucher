@@ -1,6 +1,7 @@
 package com.rumroute.core;
 
 import com.github.javafaker.Faker;
+import com.rumroute.brands.BrandService;
 import com.rumroute.category.CategoryService;
 import com.rumroute.model.brand.Brand;
 import com.rumroute.model.category.Category;
@@ -23,8 +24,12 @@ import java.util.stream.Stream;
 public class DatabaseLoader implements ApplicationRunner{
 
     private final CategoryRepository categoryRepository;
-
     private final CategoryService categoryService;
+
+    private final BrandService brandService;
+
+
+
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -64,14 +69,11 @@ public class DatabaseLoader implements ApplicationRunner{
     }
 
     //Todo Drink Loader
-
     public void loadDrink(){
-
         List<Drink> drinks = Stream
                 .generate(drinkSupplier())
                 .limit(10)
                 .collect(Collectors.toList());
-
     }
 
     private Supplier<Drink> drinkSupplier(){
@@ -89,7 +91,15 @@ public class DatabaseLoader implements ApplicationRunner{
     private Supplier<Brand> brandSupplier(){
 
         return ()->{
-            return new Brand();
+
+            Brand brand = new Brand();
+            brand.setName(faker().beer().malt());
+            brand.setDescription(faker().shakespeare().kingRichardIIIQuote());
+
+
+
+
+            return brand;
         };
     }
 
