@@ -1,6 +1,4 @@
 package com.rumroute.utils.security;
-
-
 import com.rumroute.model.role.Role;
 import com.rumroute.model.role.RoleRepository;
 import com.rumroute.model.user.User;
@@ -76,7 +74,11 @@ public final class SecurityUtils {
     }
 
     public List<String> getAuthorities(){
-        return roleRepository.findAll().stream().map(Role::getName).collect(Collectors.toList());
+        return roleRepository
+                .findAll()
+                .stream()
+                .map(Role::getName)
+                .collect(Collectors.toList());
     }
 
 

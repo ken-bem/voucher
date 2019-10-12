@@ -2,6 +2,7 @@ package com.rumroute.core;
 
 import com.github.javafaker.Faker;
 import com.rumroute.category.CategoryService;
+import com.rumroute.model.brand.Brand;
 import com.rumroute.model.category.Category;
 import com.rumroute.model.category.CategoryRepository;
 import com.rumroute.model.drink.Drink;
@@ -19,7 +20,7 @@ import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor
-public class CategoryLoader implements ApplicationRunner{
+public class DatabaseLoader implements ApplicationRunner{
 
     private final CategoryRepository categoryRepository;
 
@@ -78,13 +79,18 @@ public class CategoryLoader implements ApplicationRunner{
     }
 
     //Todo Brand Loader
-
-
-    private List<?> generator(Supplier<?> supplier){
-        return Stream
-                .generate(supplier)
+    public void loadBrand(){
+        List<Brand> brands = Stream
+                .generate(brandSupplier())
                 .limit(10)
                 .collect(Collectors.toList());
+    }
+
+    private Supplier<Brand> brandSupplier(){
+
+        return ()->{
+            return new Brand();
+        };
     }
 
 
